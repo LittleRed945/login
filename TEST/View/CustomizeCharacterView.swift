@@ -18,9 +18,13 @@ struct CustomizedCharacterView:View{
     @State private var shirt_contrast:Double=1
     @State private var pants_contrast:Double=1
     @State private var shoes_contrast:Double=1
+    //alert
     @State private var showAlert = false
     @State private var alertMsg = ""
     @State private var myAlert = Alert(title: Text(""))
+    //
+    //show user view
+    @State private var showUView=false
     var characterView:some View{
         ZStack{
             Image("char\(character.char)-\(character.direction)-\(character.action)").resizable().scaledToFit().frame(width: 108, height: 108).offset(character.offset)
@@ -94,20 +98,37 @@ struct CustomizedCharacterView:View{
                 })
                 
             }
+            Spacer()
             characterView
             Spacer()
             Button(action: {
                 uploadCharacterPhoto(img: characterView.snapshot())
             }, label: {
-                Text("送出")
+                ZStack{
+                    Image("button")
+                    Text("送出").foregroundColor(.black)
+                }
             })
-        }.background(Image("background").resizable().scaledToFill())
+        }.alert(isPresented: $showAlert) { () -> Alert in
+            return myAlert
+        }
+        .background(Image("background").resizable().scaledToFill())
+            .fullScreenCover(isPresented:$showUView){
+                UserView()
+            }
     }
-    
+    func go2UserView() -> Void {
+        print(Auth.auth().currentUser!.uid)
+//        self.presentationMode.wrappedValue.dismiss()
+        self.showUView = true
+        print("C8763")
+        print(self.showUView)
+    }
     func uploadCharacterPhoto(img:UIImage) -> Void {
         
         let userViewModel=UserViewModel()
         userViewModel.uploadPhoto(image: img) { result in
+            
             switch result {
             case .success(let url):
                 print("上傳照片成功")
@@ -115,10 +136,10 @@ struct CustomizedCharacterView:View{
                     switch result {
                     case .success(let msg):
                         print(msg)
-                        userViewModel.userSingOut()
-                    
+                        print("dDDDDDEPPRI")
                         self.showAlert=true
-                        self.myAlert=Alert(title: Text("上傳圖片成功"), message: Text(alertMsg), dismissButton: .cancel(Text("確認")))
+                        print(self.showAlert)
+                        self.myAlert=Alert(title: Text("上傳圖片成功"), message: Text(alertMsg), dismissButton: .cancel(Text("確認"),action:go2UserView))
                 case .failure(_):
                     print("設置頭像錯誤")
                 }

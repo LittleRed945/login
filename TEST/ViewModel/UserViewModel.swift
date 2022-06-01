@@ -49,7 +49,7 @@ class UserViewModel{
         }
     }
     //讀取某個collection下全部的 documents
-    func fetchUsers () {
+    func fetchUsers (completion: @escaping((Result<[UserData], Error>) -> Void)) {
         let db = Firestore.firestore()
         db.collection("users").getDocuments { snapshot, error in
             guard let snapshot = snapshot else { return }
@@ -57,7 +57,9 @@ class UserViewModel{
                 try? snapshot.data(as: UserData.self)
                 
             }
-            //print(users)
+            print(users)
+            completion(.success(users))
+            
             
         }
     }

@@ -20,6 +20,9 @@
 		AA7AACB62845C03700971A19 /* UserView.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA7AACB52845C03700971A19 /* UserView.swift */; };
 		AA7AACB82845C1DB00971A19 /* UserData.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA7AACB72845C1DB00971A19 /* UserData.swift */; };
 		AA7AACBA2845C89E00971A19 /* FirstLoginView.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA7AACB92845C89E00971A19 /* FirstLoginView.swift */; };
+		AA7AE5012847664E00B0EBC2 /* Pixel.ttf in Resources */ = {isa = PBXBuildFile; fileRef = AA7AE5002847664E00B0EBC2 /* Pixel.ttf */; };
+		AA7AE503284767F500B0EBC2 /* MyTextFieldStyle.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA7AE502284767F500B0EBC2 /* MyTextFieldStyle.swift */; };
+		AA7CEE052847803D000F51BD /* NukeUI in Frameworks */ = {isa = PBXBuildFile; productRef = AA7CEE042847803D000F51BD /* NukeUI */; };
 		AA80AFF4283F59E700438E19 /* Style.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA80AFF3283F59E700438E19 /* Style.swift */; };
 		AA80AFF6283F5BCB00438E19 /* Character.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA80AFF5283F5BCB00438E19 /* Character.swift */; };
 		AA84776A28333500005EB449 /* FirebaseAuth in Frameworks */ = {isa = PBXBuildFile; productRef = AA84776928333500005EB449 /* FirebaseAuth */; };
@@ -45,6 +48,8 @@
 		AA7AACB52845C03700971A19 /* UserView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserView.swift; sourceTree = "<group>"; };
 		AA7AACB72845C1DB00971A19 /* UserData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserData.swift; sourceTree = "<group>"; };
 		AA7AACB92845C89E00971A19 /* FirstLoginView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FirstLoginView.swift; sourceTree = "<group>"; };
+		AA7AE5002847664E00B0EBC2 /* Pixel.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = Pixel.ttf; sourceTree = "<group>"; };
+		AA7AE502284767F500B0EBC2 /* MyTextFieldStyle.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MyTextFieldStyle.swift; sourceTree = "<group>"; };
 		AA80AFF3283F59E700438E19 /* Style.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Style.swift; sourceTree = "<group>"; };
 		AA80AFF5283F5BCB00438E19 /* Character.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Character.swift; sourceTree = "<group>"; };
 		AA84776F28333FD5005EB449 /* LoginView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginView.swift; sourceTree = "<group>"; };
@@ -59,6 +64,7 @@
 				AA84776A28333500005EB449 /* FirebaseAuth in Frameworks */,
 				AA84776C28333500005EB449 /* FirebaseFirestoreSwift in Frameworks */,
 				AA84776E28333500005EB449 /* FirebaseStorage in Frameworks */,
+				AA7CEE052847803D000F51BD /* NukeUI in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -88,6 +94,7 @@
 				AA80AFF1283F597200438E19 /* Model */,
 				AA80AFF0283F596300438E19 /* View */,
 				5755DE4B28222BF7004F3DBA /* GoogleService-Info.plist */,
+				AA7AE5002847664E00B0EBC2 /* Pixel.ttf */,
 				5755DE32282222FF004F3DBA /* ContentView.swift */,
 				5755DE3428222309004F3DBA /* Assets.xcassets */,
 				5755DE3928222309004F3DBA /* Info.plist */,
@@ -126,6 +133,7 @@
 				AA7AACB12845BB8F00971A19 /* LoginError.swift */,
 				AA7AACB32845BBB400971A19 /* RegisterError.swift */,
 				AA7AACB72845C1DB00971A19 /* UserData.swift */,
+				AA7AE502284767F500B0EBC2 /* MyTextFieldStyle.swift */,
 			);
 			path = Model;
 			sourceTree = "<group>";
@@ -158,6 +166,7 @@
 				AA84776928333500005EB449 /* FirebaseAuth */,
 				AA84776B28333500005EB449 /* FirebaseFirestoreSwift */,
 				AA84776D28333500005EB449 /* FirebaseStorage */,
+				AA7CEE042847803D000F51BD /* NukeUI */,
 			);
 			productName = TEST;
 			productReference = 5755DE2D282222FF004F3DBA /* TEST.app */;
@@ -188,6 +197,7 @@
 			mainGroup = 5755DE24282222FF004F3DBA;
 			packageReferences = (
 				AA84776828333500005EB449 /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */,
+				AA7CEE032847803C000F51BD /* XCRemoteSwiftPackageReference "NukeUI" */,
 			);
 			productRefGroup = 5755DE2E282222FF004F3DBA /* Products */;
 			projectDirPath = "";
@@ -206,6 +216,7 @@
 				5755DE3828222309004F3DBA /* Preview Assets.xcassets in Resources */,
 				5755DE4C28222BF8004F3DBA /* GoogleService-Info.plist in Resources */,
 				5755DE3528222309004F3DBA /* Assets.xcassets in Resources */,
+				AA7AE5012847664E00B0EBC2 /* Pixel.ttf in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -223,6 +234,7 @@
 				AA80AFF6283F5BCB00438E19 /* Character.swift in Sources */,
 				5755DE31282222FF004F3DBA /* TESTApp.swift in Sources */,
 				AA7AACB82845C1DB00971A19 /* UserData.swift in Sources */,
+				AA7AE503284767F500B0EBC2 /* MyTextFieldStyle.swift in Sources */,
 				AA7AACB02845B89200971A19 /* UserViewModel.swift in Sources */,
 				AA78502F28461683006A2999 /* ShowComponentsView.swift in Sources */,
 				AA7AACBA2845C89E00971A19 /* FirstLoginView.swift in Sources */,
@@ -418,6 +430,14 @@
 /* End XCConfigurationList section */
 
 /* Begin XCRemoteSwiftPackageReference section */
+		AA7CEE032847803C000F51BD /* XCRemoteSwiftPackageReference "NukeUI" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/kean/NukeUI";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 0.8.1;
+			};
+		};
 		AA84776828333500005EB449 /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */ = {
 			isa = XCRemoteSwiftPackageReference;
 			repositoryURL = "https://github.com/firebase/firebase-ios-sdk";
@@ -429,6 +449,11 @@
 /* End XCRemoteSwiftPackageReference section */
 
 /* Begin XCSwiftPackageProductDependency section */
+		AA7CEE042847803D000F51BD /* NukeUI */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = AA7CEE032847803C000F51BD /* XCRemoteSwiftPackageReference "NukeUI" */;
+			productName = NukeUI;
+		};
 		AA84776928333500005EB449 /* FirebaseAuth */ = {
 			isa = XCSwiftPackageProductDependency;
 			package = AA84776828333500005EB449 /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */;

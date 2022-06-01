@@ -18,13 +18,13 @@ struct RegisterView:View{
     @State private var myAlert = Alert(title: Text(""))
     @State private var showFLView=false
     var body: some View{
-        VStack{
-            TextField("Email",text:$mail)
+        VStack(spacing:0){
+            TextField("Email",text:$mail).textFieldStyle(MyTextFieldStyle())
                 .padding(.leading)
-            TextField("Password",text:$password)
+            TextField("Password",text:$password).textFieldStyle(MyTextFieldStyle())
                 .padding(.leading)
             HStack{
-                TextField("Confirm Password",text:$confirm_password)
+                TextField("Confirm Password",text:$confirm_password).textFieldStyle(MyTextFieldStyle())
                     .padding(.leading)
                 
                 if password != confirm_password {
@@ -65,11 +65,15 @@ struct RegisterView:View{
                             }
                         }
                     }
-                }, label: {Text("送出")})
+                }, label: {
+                    ZStack{Image("button")
+                        Text("送出").foregroundColor(.black)
+                    }
+                    })
             }
         }
         .navigationTitle("註冊")
-        .background(Image("background").resizable().scaledToFill().edgesIgnoringSafeArea(.all))
+        .background(Image("background").edgesIgnoringSafeArea(.all))
         .alert(isPresented: $showAlert) { () -> Alert in
                             return myAlert
                         }

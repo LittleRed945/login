@@ -22,10 +22,10 @@ struct LoginView:View{
     @FirestoreQuery(collectionPath: "users") var users: [UserData]
     var body: some View{
         NavigationView {
-            VStack(spacing:10){
-                TextField("Email",text:$mail)
+            VStack(spacing:5){
+                TextField("Email",text:$mail).textFieldStyle(MyTextFieldStyle())
                     .padding(.leading)
-                TextField("Password",text:$password)
+                TextField("Password",text:$password).textFieldStyle(MyTextFieldStyle())
                     .padding(.leading)
                 
                 HStack{
@@ -37,10 +37,33 @@ struct LoginView:View{
                                 
                                 if let user = Auth.auth().currentUser {
                                     print("\(user.uid) 登入成功")
-                                    for u in users{
-                                        if u.id == user.uid{
-                                            not_first_login=true
+                                    //                                    for u in users{
+                                    //                                        if u.id == user.uid{
+                                    //                                            print("DD")
+                                    //                                            not_first_login=true
+                                    //                                        }
+                                    //                                        print(u.userNickName)
+                                    //                                        print(u.userBD)
+                                    //                                    }
+                                    userViewModel.fetchUsers(){
+                                        (result) in
+                                        switch result {
+                                        case .success(let udArray):
+                                            print("使用者資料抓取成功")
+                                            for u in udArray {
+                                                
+                                                if u.id == user.uid {
+                                                    not_first_login = true
+                                                }
+                                            }
+                                            showView = true
+                                            
+                                        case .failure(_):
+                                            print("使用者資料抓取失敗")
+                                            not_first_login = false
+                                            //showView = true
                                         }
+                                        
                                     }
                                     showView=true
                                 } else {
@@ -62,23 +85,27 @@ struct LoginView:View{
                         }
                     }, label: {
                         ZStack{
-                            Text("登入")
+                            Image("button")
+                            Text("登入").foregroundColor(.black).font(.custom("JackyFont", size: 15))
                             
                         }
                     })
                     if not_first_login{
-                        EmptyView().fullScreenCover(isPresented: $showView)
+                        Text("").fullScreenCover(isPresented: $showView)
                         { UserView()}
                     }else{
-                        EmptyView().fullScreenCover(isPresented: $showView)
+                        Text("").fullScreenCover(isPresented: $showView)
                         { FirstLoginView(mail: mail, password: password)
                         }
                         
                         
                     }
                     NavigationLink{RegisterView()} label:{
-                            Text("註冊")
+                        ZStack{
+                            Image("button")
+                            Text("註冊").foregroundColor(.black).font(.custom("JackyFont", size: 15))
                         }
+                    }
                 }
             }.background(Image("background").edgesIgnoringSafeArea(.all))
                 .alert(isPresented: $showAlert) { () -> Alert in
