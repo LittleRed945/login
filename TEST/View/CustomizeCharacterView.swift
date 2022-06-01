@@ -18,6 +18,18 @@ struct CustomizedCharacterView:View{
     @State private var shirt_contrast:Double=1
     @State private var pants_contrast:Double=1
     @State private var shoes_contrast:Double=1
+    @State private var showAlert = false
+    @State private var alertMsg = ""
+    @State private var myAlert = Alert(title: Text(""))
+    var characterView:some View{
+        ZStack{
+            Image("char\(character.char)-\(character.direction)-\(character.action)").resizable().scaledToFit().frame(width: 108, height: 108).offset(character.offset)
+            Image("hair\(character.hair)-\(character.direction)-\(character.action)").resizable().scaledToFit().frame(width: 108, height: 108).offset(character.offset)
+            Image("shirt\(character.shirt)-\(character.direction)-\(character.action)").resizable().scaledToFit().frame(width: 108, height: 108).offset(character.offset)
+            Image("pants\(character.pants)-\(character.direction)-\(character.action)").resizable().scaledToFit().frame(width: 108, height: 108).offset(character.offset)
+            Image("shoes\(character.shoes)-\(character.direction)-\(character.action)").resizable().scaledToFit().frame(width: 108, height: 108).offset(character.offset)
+        }
+    }
     var body: some View{
         HStack(spacing:0.0){
             ShowComponentsView(character: $character, style_name: now_style)
@@ -72,29 +84,65 @@ struct CustomizedCharacterView:View{
                 }, label: {
                     Image("shoes_button").contrast(shoes_contrast)
                 })
-                Button("logout"){
-                    do {
-                        try Auth.auth().signOut()
-                        if Auth.auth().currentUser == nil {
-                            print("登出成功")
-                        }
-                    }
-                    catch {
-                        print("登出錯誤")
-                    }
-                }
+                Button(action: {
+                    character.hair="0"+String(Int.random(in: 1...2))
+                    character.shirt="0"+String(Int.random(in: 1...2))
+                    character.pants="0"+String(Int.random(in: 1...2))
+                    character.shoes="0"+String(Int.random(in: 1...1))
+                }, label: {
+                    Image("random_button")
+                })
+                
             }
+            characterView
             Spacer()
-            ZStack{
-                Image("char\(character.char)-\(character.direction)-\(character.action)").resizable().scaledToFit().frame(width: 108, height: 108).offset(character.offset)
-                Image("hair\(character.hair)-\(character.direction)-\(character.action)").resizable().scaledToFit().frame(width: 108, height: 108).offset(character.offset)
-                Image("shirt\(character.shirt)-\(character.direction)-\(character.action)").resizable().scaledToFit().frame(width: 108, height: 108).offset(character.offset)
-                Image("pants\(character.pants)-\(character.direction)-\(character.action)").resizable().scaledToFit().frame(width: 108, height: 108).offset(character.offset)
-                Image("shoes\(character.shoes)-\(character.direction)-\(character.action)").resizable().scaledToFit().frame(width: 108, height: 108).offset(character.offset)
-            }
+            Button(action: {
+                uploadCharacterPhoto(img: characterView.snapshot())
+            }, label: {
+                Text("送出")
+            })
         }.background(Image("background").resizable().scaledToFill())
     }
     
-    
+    func uploadCharacterPhoto(img:UIImage) -> Void {
+        
+        let userViewModel=UserViewModel()
+        userViewModel.uploadPhoto(image: img) { result in
+            switch result {
+            case .success(let url):
+                print("上傳照片成功")
+                userViewModel.setUserPhoto(url: url) { result in
+                    switch result {
+                    case .success(let msg):
+                        print(msg)
+                        userViewModel.userSingOut()
+                    
+                        self.showAlert=true
+                        self.myAlert=Alert(title: Text("上傳圖片成功"), message: Text(alertMsg), dismissButton: .cancel(Text("確認")))
+                case .failure(_):
+                    print("設置頭像錯誤")
+                }
+                }
+        case .failure(let error):
+            print(error)
+        }
+    }
 }
-
+}
+//convert a SwiftUI view to an image
+extension View {
+    func snapshot() -> UIImage {
+        let controller = UIHostingController(rootView: self)
+        let view = controller.view
+        
+        let targetSize = controller.view.intrinsicContentSize
+        view?.bounds = CGRect(origin: .zero, size: targetSize)
+        view?.backgroundColor = .clear
+        
+        let renderer = UIGraphicsImageRenderer(size: targetSize)
+        
+        return renderer.image { _ in
+            view?.drawHierarchy(in: controller.view.bounds, afterScreenUpdates: true)
+        }
+    }
+}

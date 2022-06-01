@@ -16,6 +16,7 @@ struct RegisterView:View{
     @State private var showAlert = false
     @State private var alertMsg = ""
     @State private var myAlert = Alert(title: Text(""))
+    @State private var showFLView=false
     var body: some View{
         VStack{
             TextField("Email",text:$mail)
@@ -68,15 +69,18 @@ struct RegisterView:View{
             }
         }
         .navigationTitle("註冊")
-        .background(Image("background").resizable().scaledToFill())
+        .background(Image("background").resizable().scaledToFill().edgesIgnoringSafeArea(.all))
         .alert(isPresented: $showAlert) { () -> Alert in
                             return myAlert
                         }
+        .fullScreenCover(isPresented:$showFLView){
+            FirstLoginView(mail:mail,password: password)
+        }
     }
     func go2FirstLoginView() -> Void {
         print(Auth.auth().currentUser!.uid)
 //        self.presentationMode.wrappedValue.dismiss()
-//        self.showFLView = true
+        self.showFLView = true
     }
     
     func showAlertMsg(msg: String) -> Void {

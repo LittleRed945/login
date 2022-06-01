@@ -80,7 +80,7 @@ struct LoginView:View{
                             Text("註冊")
                         }
                 }
-            }.background(Image("background").resizable().scaledToFill())
+            }.background(Image("background").edgesIgnoringSafeArea(.all))
                 .alert(isPresented: $showAlert) { () -> Alert in
                     return Alert(title: Text("錯誤"), message: Text(alertMsg),  dismissButton: .default(Text("重新輸入")))
                 }

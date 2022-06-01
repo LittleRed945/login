@@ -62,14 +62,74 @@ class UserViewModel{
         }
     }
     func userSingOut() -> Void {
-            do {
-                try Auth.auth().signOut()
-                if Auth.auth().currentUser == nil {
-                    print("登出成功")
-                }
+        do {
+            try Auth.auth().signOut()
+            if Auth.auth().currentUser == nil {
+                print("登出成功")
             }
-            catch {
-                print("登出錯誤")
+        }
+        catch {
+            print("登出錯誤")
+        }
+    }
+    //修改user的暱稱
+    func setUserNickName(userDisplayName: String) -> Void {
+        let changeRequest = Auth.auth().currentUser?.createProfileChangeRequest()
+        changeRequest?.displayName = userDisplayName
+        changeRequest?.commitChanges(completion: { error in
+            guard error == nil else {
+                print(error?.localizedDescription)
+                print("修改user display name出錯")
+                return
             }
+        })
+    }
+    //上傳user基本資料
+    func createUserData(ud: UserData, uid: String, completion: @escaping((Result<String, Error>) -> Void)) {
+        let db = Firestore.firestore()
+        do {
+            try db.collection("users").document(uid).setData(from: ud)
+            completion(.success("建立資料成功"))
+        } catch {
+            completion(.failure(error))
+            print(error)
+        }
+    }
+    //上傳相片
+       func uploadPhoto(image: UIImage, completion: @escaping (Result<URL, Error>) -> Void) {
+           let fileReference = Storage.storage().reference().child(UUID().uuidString + ".png")
+           if let data = image.pngData() {
+               
+               fileReference.putData(data, metadata: nil) { result in
+                   switch result {
+                   case .success(_):
+                       fileReference.downloadURL { result in
+                           switch result {
+                           case .success(let url):
+                               completion(.success(url))
+                               print(url)
+                           case .failure(let error):
+                               completion(.failure(error))
+                           }
+                       }
+                   case .failure(let error):
+                       completion(.failure(error))
+                   }
+               }
+           }
+       }
+    
+    //將檔案設成使用者的個人頭像
+    func setUserPhoto(url: URL, completion: @escaping((Result<String, Error>) -> Void)) {
+            let changeRequest = Auth.auth().currentUser?.createProfileChangeRequest()
+            changeRequest?.photoURL = url
+            completion(.success("頭像修改成功"))
+            changeRequest?.commitChanges(completion: { error in
+               guard error == nil else {
+                   print(error?.localizedDescription)
+                   
+                   return
+               }
+            })
         }
 }
